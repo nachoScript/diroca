@@ -1,0 +1,42 @@
+/* Estilo para el menú fijo */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Personalización del fondo y la estructura del header */
+.header-bg {
+  background-color: #ffffff; /* Fondo blanco */
+  color: #333333; /* Color de texto oscuro */
+}
+
+.navbar ul li a {
+  color: #333333; /* Color de texto para enlaces */
+}
+
+.navbar ul li a:hover {
+  color: #e64a19; /* Color rojo oscuro para hover */
+}
+
+/* Estilo para el campo de búsqueda y botón */
+.search-button {
+  background-color: #e64a19;
+  color: white;
+}
+
+.search-button:hover {
+  background-color: #d74313;
+}
+
+/* Asegurarse que el banner y secciones ocupen toda la altura de la pantalla */
+.full-height {
+  min-height: 100vh; /* 100% de la altura del dispositivo */
+}
+
+/* Imagen del banner ajustada al tamaño completo */
+.banner-img {
+  object-fit: cover; /* Hace que la imagen cubra completamente el área disponible */
+  width: 100%;
+  height: 100%;
+}

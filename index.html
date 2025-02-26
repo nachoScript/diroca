@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ensayos No Destructivos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+  <style>
+    /* Barra de información encima del header */
+    .info-bar {
+      background-color: #237d38;
+      /* Color de fondo rojo oscuro */
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .info-bar a {
+      color: white;
+      margin-left: 10px;
+      text-decoration: none;
+      font-weight: normal;
+    }
+
+    .info-bar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Estilo para el botón de WhatsApp */
+    .whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      padding: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      font-size: 30px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      width: 60px;
+      height: 60px;
+    }
+
+    .whatsapp-button:hover {
+      background-color: #128C7E;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Estilo para el menú fijo */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-bg {
+      background-color: #ffffff;
+      color: #19e634;
+    }
+
+    .navbar ul li a {
+      color: #333333;
+    }
+
+    .navbar ul li a:hover {
+      color: #19e634;
+    }
+
+    .banner-img {
+      object-fit: cover;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .section-padding {
+      padding: 4rem 1rem;
+    }
+
+    /* Menú hamburguesa y menú móvil */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+        cursor: pointer;
+      }
+
+      .menu-mobile {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: white;
+        width: 100%;
+        padding: 1rem;
+        z-index: 9999;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu-mobile.open {
+        display: block;
+      }
+
+      .menu-mobile ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .menu-mobile ul li {
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .menu-mobile ul li a {
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .menu-mobile ul li a:hover {
+        background-color: #f5f5f5;
+        color: #e64a19;
+      }
+    }
+
+    /* Para pantallas grandes, el menú hamburguesa y el menu-mobile no aparece */
+    @media (min-width: 769px) {
+      .hamburger {
+        display: none;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .menu-mobile {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-green-100 font-sans">
+
+  <!-- Barra de información de contacto -->
+  <div class="info-bar">
+    <span><i class="fas fa-envelope"></i> contacto@diroca.com | </span>
+    <span><i class="fas fa-map-marker-alt"></i> Calle 13 No. 11-50, Local 301, Neiva, Huila</span>
+  </div>
+
+
+
+  <!-- Header -->
+  <header class="navbar header-bg p-4 bg-gray-100 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- logo -->
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/logo-diroca.png" alt="Logo DIROCA" class="h-12">
+        </a>
+      </div>
+      <nav class="hidden md:block">
+        <ul class="flex space-x-8 justify-center">
+          <li><a href="#inicio" class="hover:text-green-500">Inicio</a></li>
+          <li><a href="#servicios" class="hover:text-green-500">Nuestros Servicios</a></li>
+          <li><a href="#quienes-somos" class="hover:text-green-500">Quiénes Somos</a></li>
+          <li><a href="#noticias" class="hover:text-green-500">Técnicas de Inspección</a></li>
+          <li><a href="#contacto" class="hover:text-green-500">Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="hamburger md:hidden" onclick="toggleMenu()">
+        <i id="hamburger-icon" class="fas fa-bars text-2xl"></i>
+      </div>
+      <div id="menu-mobile" class="menu-mobile">
+        <ul>
+          <li><a href="#inicio" class="hover:text-green-500" onclick="closeMenu()">Inicio</a></li>
+          <li><a href="#servicios" class="hover:text-green-500" onclick="closeMenu()">Nuestros Servicios</a></li>
+          <li><a href="#quienes-somos" class="hover:text-green-500" onclick="closeMenu()">Quiénes Somos</a></li>
+          <li><a href="#noticias" class="hover:text-green-500" onclick="closeMenu()">Técnicas de Inspección</a></li>
+          <li><a href="#contacto" class="hover:text-green-500" onclick="closeMenu()">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+
+  <!-- Banner -->
+  <section id="inicio" class="relative full-height shadow-md" data-aos="fade-up" data-aos-duration="1000">
+    <img src="images/IMG_6275.PNG" alt="Ensayo no destructivo" class="banner-img">
+    <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <h2 class="text-6xl font-semibold text-white text-center">Servicios de Ensayos No Destructivos</h2>
+    </div>
+    <div class="absolute bottom-48 left-1/2 transform -translate-x-1/2 hidden lg:block">
+      <a href="#contacto" class="bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600">
+        Contactanos
+      </a>
+    </div>
+  </section>
+
+  <!-- WhatsApp Button -->
+  <!-- <a href="https://wa.me/1234567890" class="whatsapp-button" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a> -->
+
+  <!-- Nuestros Logros -->
+  <section class="bg-gray-200 py-16 relative shadow-md" data-aos="fade-up" data-aos-duration="1500">
+    <div class="absolute inset-0 bg-cover bg-center"
+      style="background-image: url('images/img-logros.jpg'); filter: brightness(0.5);"></div>
+    <div class="container mx-auto text-center relative z-10">
+      <h2 class="text-3xl font-semibold mb-8 text-white">Nuestros Logros</h2>
+      <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-12">
+
+        <div class="stat-item" data-aos="fade-left" data-aos-duration="1500">
+          <p class="text-5xl font-bold text-white">+3</p>
+          <p class="text-lg text-white">AÑOS DE EXPERIENCIA</p>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-duration="1500">
+          <p class="text-5xl font-bold text-white">+10</p>
+          <p class="text-lg text-white">MARCAS DE INSUMOS Y EQUIPOS UTILIZADOS</p>
+        </div>
+        <div class="stat-item" data-aos="fade-right" data-aos-duration="1500">
+          <p class="text-5xl font-bold text-white">+5</p>
+          <p class="text-lg text-white">TECNICOS CERTIFICADOS</p>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-duration="1500">
+          <p class="text-5xl font-bold text-white">+500</p>
+          <p class="text-lg text-white">SERVICIOS PRESTADOS A NUESTROS CLIENTES</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Servicios -->
+  <section id="servicios" class="section-padding shadow-md" data-aos="fade-up" data-aos-duration="1000">
+    <h2 class="text-3xl font-semibold text-center mb-8 text-green-500">Nuestros Servicios</h2>
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+      <!-- Card 1 (Técnicas Convencionales) -->
+      <div class="service-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow"
+        data-aos="fade-right" data-aos-duration="1000">
+        <img src="images/IMG_6276.PNG" alt="Técnicas Convencionales" class="w-full h-64 object-cover rounded-lg">
+        <h3 class="text-xl font-semibold text-center mt-4 text-green-500">Técnicas Convencionales</h3>
+        <ul class="mt-4 space-y-2 text-gray-500">
+          <li><strong>Partículas Magnéticas</strong></li>
+          <li><strong>Líquidos Penetrantes</strong></li>
+          <li><strong>Inspección Visual (VT)</strong></li>
+          <li><strong>Ultrasonido (UT)</strong></li>
+          <li><strong>Caracterización de Materiales</strong></li>
+        </ul>
+        <a href="#contacto">
+          <button class="bg-green-500 text-white py-2 px-6 rounded-lg mt-4 w-30 hover:bg-green-600">Contactanos</button>
+        </a>
+      </div>
+
+      <!-- Card 2 (Técnicas Avanzadas) -->
+      <div class="service-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-left"
+        data-aos-duration="1000">
+        <img src="images/IMG_6273.PNG" alt="Técnicas Avanzadas" class="w-full h-64 object-cover rounded-lg">
+        <h3 class="text-xl font-semibold text-center mt-4 text-green-500">Técnicas Avanzadas</h3>
+        <ul class="mt-4 space-y-2 text-gray-500">
+          <li><strong>Ondas Guiadas</strong></li>
+          <li><strong>Electromagnetismo</strong></li>
+          <li><strong>Leak Testing</strong></li>
+          <li><strong>Acoustic Pulse Reflectometry (APR)</strong></li>
+          <li><strong>Emisión Acústica</strong></li>
+          <li><strong>Pulsed Eddy Current (PEC)</strong></li>
+          <li><strong>Eddy Current Array (ECA)</strong></li>
+          <!-- <li><strong>Canner Laser para Mediciones 3D</strong></li> -->
+          <li><strong>Ultrasonido Phased Array (UTPA)</strong></li>
+          <!-- <li><strong>Ultrasonido Automatizado (AUT)</strong></li>
+          <li><strong>Ultrasonido Time of Flight Diffraction (TOFD)</strong></li>
+          <li><strong>Alternating Current Field Measurement (ACFM)</strong></li> -->
+        </ul>
+        <a href="#contacto">
+          <button
+            class="bg-green-500 text-white py-2 px-6 rounded-lg mt-4 w-30 hover:bg-green-600 ">Contactanos</button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiénes Somos -->
+  <section id="quienes-somos" class="bg-gray-800 section-padding shadow-md" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-semibold text-center mb-8 text-green-500">Quiénes Somos</h2>
+
+      <!-- Contenedor con Imagen y Texto -->
+      <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-12">
+
+        <!-- Contenido de las tarjetas -->
+        <div class="space-y-8">
+          <!-- Tarjeta: Somos una Empresa Dedicada -->
+          <div class="bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-up"
+            data-aos-duration="800">
+            <h3 class="text-2xl font-semibold mb-4 flex justify-center items-center">
+              <i class="fas fa-building text-green-500 mr-2"></i> <span class="text-green-500">En DIROCA S.A.S.</span>
+            </h3>
+            <p class="text-lg text-justify text-gray-500">
+              Somos una empresa dedicada a realizar ensayos no destructivos en el sector de hidrocarburos, con el
+              objetivo de garantizar la seguridad y calidad de las instalaciones. Nuestro equipo de profesionales
+              altamente capacitados trabaja con la más avanzada tecnología.
+            </p>
+          </div>
+
+          <!-- Tarjeta Misión -->
+          <div class="bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-up"
+            data-aos-duration="1000">
+            <h3 class="text-2xl font-semibold mb-4 flex justify-center items-center">
+              <i class="fas fa-bullseye text-green-500 mr-2"></i> <span class="text-green-500">Misión</span>
+            </h3>
+            <p class="text-lg text-justify text-gray-500">
+              Nuestra misión es proporcionar soluciones de ensayos no destructivos de la más alta calidad, para asegurar
+              la integridad y durabilidad de las infraestructuras en el sector industrial. Comprometidos con la
+              excelencia, la seguridad y la tecnología avanzada, buscamos ser líderes en nuestra industria.
+            </p>
+          </div>
+
+          <!-- Tarjeta Visión -->
+          <div class="bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-up"
+            data-aos-duration="1200">
+            <h3 class="text-2xl font-semibold mb-4 flex justify-center items-center">
+              <i class="fas fa-eye text-green-500 mr-2"></i> <span class="text-green-500">Visión</span>
+            </h3>
+            <p class="text-lg text-justify text-gray-500">
+              Nos esforzamos por ser la empresa de referencia en ensayos no destructivos, contribuyendo al progreso del
+              sector hidrocarburos y otras industrias a través de la innovación constante, un equipo humano calificado y
+              un compromiso con la mejora continua.
+            </p>
+          </div>
+
+          <!-- Tarjeta Valores -->
+          <div class="bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-up"
+            data-aos-duration="1400">
+            <h3 class="text-2xl font-semibold mb-4 flex justify-center items-center">
+              <i class="fas fa-handshake text-green-500 mr-2"></i> <span class="text-green-500">Nuestros Valores</span>
+            </h3>
+            <ul class="text-lg list-disc list-inside text-justify text-gray-500">
+              <li>Compromiso con la calidad</li>
+              <li>Seguridad en cada procedimiento</li>
+              <li>Innovación y mejora continua</li>
+              <li>Responsabilidad social y ambiental</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Espacio para la imagen -->
+        <div class="flex justify-center md:justify-end">
+          <img src="images/IMG_6271.JPG" alt="Imagen de Quiénes Somos" class="w-full max-w-md rounded-lg shadow-md">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Técnicas -->
+  <section id="noticias" class="section-padding shadow-md" data-aos="fade-up" data-aos-duration="1000">
+    <h2 class="text-3xl font-semibold text-center mb-8 text-green-500">Técnicas de Inspección</h2>
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Tarjeta Inspección Visual -->
+      <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-right"
+        data-aos-duration="1000">
+        <h3 class="text-xl font-semibold text-center text-green-500">Inspección Visual</h3>
+        <p class="mt-2 text-justify text-gray-500">Inspección visual, ya sea de manera remota o directa, utilizando
+          herramientas que
+          aseguren un diagnóstico tanto cualitativo como cuantitativo, conforme a los requisitos de nuestros clientes y
+          en cumplimiento con las normas y estándares internacionales.</p>
+      </div>
+
+      <!-- Tarjeta Ultrasonido Convencional -->
+      <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-left"
+        data-aos-duration="1000">
+        <h3 class="text-xl font-semibold text-center text-green-500">Ultrasonido Convencional</h3>
+        <p class="mt-2 text-justify text-gray-500">A través de ultrasonido de alta frecuencia, podemos detectar, medir y
+          localizar
+          defectos en materiales o soldaduras evaluados con esta técnica. Nuestros equipos de GE o SIUI brindan
+          resultados óptimos con una alta precisión.</p>
+      </div>
+
+      <!-- Tarjeta Inspección por Líquidos Penetrantes -->
+      <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-up"
+        data-aos-duration="1000">
+        <h3 class="text-xl font-semibold text-center text-green-500">Inspección por Líquidos Penetrantes</h3>
+        <p class="mt-2 text-justify text-gray-500">Identificación de defectos superficiales en soldaduras y superficies,
+          de acuerdo
+          con los procedimientos y normas aplicadas, utilizando técnicas fluorescentes y/o coloreadas.F</p>
+      </div>
+
+      <!-- Tarjeta Ultrasonido Phased Array & TOFD -->
+      <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-right"
+        data-aos-duration="1200">
+        <h3 class="text-xl font-semibold text-center text-green-500">Ultrasonido Phased Array & TOFD</h3>
+        <p class="mt-2 text-justify text-gray-500">Phased Array posibilita la localización y medición de indicaciones
+          con más ventajas
+          que el ultrasonido convencional. Ofrece mayor velocidad de inspección, una mayor probabilidad de detección,
+          mejores rastreos e informes más detallados. Nuestro equipo Mantis M2M de alta tecnología proporciona los
+          mejores resultados, con diferentes vistas polares para una visualización más clara de los defectos.</p>
+      </div>
+
+      <!-- Tarjeta Inspección por Partículas Magnéticas -->
+      <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-left"
+        data-aos-duration="1200">
+        <h3 class="text-xl font-semibold text-center text-green-500">Inspección por Partículas Magnéticas</h3>
+        <p class="mt-2 text-justify text-gray-500">Phased Array posibilita la localización y medición de indicaciones
+          con más ventajas
+          que el ultrasonido convencional. Ofrece mayor velocidad de inspección, una mayor probabilidad de detección,
+          mejores rastreos e informes más detallados. Nuestro equipo Mantis M2M de alta tecnología proporciona los
+          mejores resultados, con diferentes vistas polares para una visualización más clara de los defectos.</p>
+      </div>
+
+      <!-- Tarjeta Medición de Espesores por Ultrasonido (Scan A/B) -->
+      <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-up"
+        data-aos-duration="1400">
+        <h3 class="text-xl font-semibold text-center text-green-500">Medición de Espesores por Ultrasonido (Scan A/B)
+        </h3>
+        <p class="mt-2 text-justify text-gray-500">Esta técnica utiliza ondas de alta frecuencia para detectar los
+          espesores mediante
+          la técnica Scan A y obtener un perfil de espesores a través de la técnica Scan-B.</p>
+      </div>
+
+      <!-- Tarjeta Radiografía Computarizada (CR) -->
+      <!-- <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-right"
+        data-aos-duration="1400">
+        <h3 class="text-xl font-semibold text-center text-green-500">Radiografía Computarizada (CR)</h3>
+        <p class="mt-2 text-justify text-gray-500">Inspeccionar una soldadura o verificar espesores utilizando una de las técnicas más
+          antiguas de los END. DIROCA ofrece un ensayo no destructivo no convencional en el que realizamos radiografías
+          con un tubo de rayos X o una fuente de Iridio 92, empleando placas fosforadas reutilizables y un escáner Durr
+          para proporcionar resultados instantáneos y de alta calidad. De este modo, obtenemos resultados inmediatos
+          para trabajos en tuberías convencionales o plantas de proceso. Dentro de esta misma técnica, ofrecemos
+          radiografía tangencial para la verificación de espesores en tuberías en servicio.</p>
+      </div> -->
+
+      <!-- Tarjeta Ondas Guiadas -->
+      <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-left"
+        data-aos-duration="1600">
+        <h3 class="text-xl font-semibold text-center text-green-500">Ondas Guiadas</h3>
+        <p class="mt-2 text-justify text-gray-500">La técnica de Ondas Guiadas emplea ondas ultrasónicas de baja
+          frecuencia que se
+          desplazan a lo largo de la tubería, permitiendo localizar con precisión las áreas afectadas, en función de la
+          distancia desde el anillo transductor. Esta técnica de inspección puede realizarse sin la necesidad de
+          andamiaje adicional y reduciendo la necesidad de retirar la aislación de las tuberías. Se pueden inspeccionar
+          hasta 80 metros de tubería en cada disparo, dependiendo de las condiciones de la misma.</p>
+      </div>
+
+      <!-- Tarjeta Identificación Positiva de Materiales (IPM) -->
+      <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-up"
+        data-aos-duration="1600">
+        <h3 class="text-xl font-semibold text-center text-green-500">Identificación Positiva de Materiales (IPM)</h3>
+        <p class="mt-2 text-justify text-gray-500">La Identificación Positiva de Materiales (PMI) le permite determinar
+          la composición
+          química de los materiales e identificar el tipo de aleación con la que están fabricados componentes como
+          tubos, válvulas, bombas, entre otros. PMI también facilita la verificación de que los materiales cumplen con
+          los requisitos especificados para sus componentes.</p>
+      </div>
+
+      <!-- Tarjeta Mapeo de Corrosión -->
+      <div class="news-item bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow" data-aos="fade-right"
+        data-aos-duration="1800">
+        <h3 class="text-xl font-semibold text-center text-green-500">Mapeo de Corrosión</h3>
+        <p class="mt-2 text-justify text-gray-500">El mapeo de corrosión mediante ultrasonido permite medir las
+          variaciones en el
+          material causadas por la corrosión, las cuales pueden ser identificadas y representadas gráficamente. Esta
+          técnica es ampliamente utilizada en la industria petrolera para la detección y caracterización de la corrosión
+          en tuberías, recipientes o tanques en servicio. La información obtenida puede ser almacenada en un ordenador y
+          visualizada con distintos colores que indican las diferentes mediciones del espesor.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="bg-gray-100 section-padding shadow-md" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-semibold text-center mb-8 text-green-500" data-aos="fade-up" data-aos-duration="1200">
+        Contacto</h2>
+      <p class="text-lg text-center mb-8 text-gray-500" data-aos="fade-up" data-aos-duration="1400">Para más información
+        o consultas, no dudes en ponerte en contacto con nosotros a través de nuestros canales disponibles.</p>
+
+      <!-- Contenedor para las tarjetas y el mapa -->
+      <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-12">
+
+        <!-- Datos de Contacto (izquierda) -->
+        <div>
+          <div class="grid sm:grid-cols-1 md:grid-cols-1 gap-8 mb-8">
+            <!-- Teléfono -->
+            <!-- <div class="contact-info bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow text-center" data-aos="fade-right" data-aos-duration="1500">
+            <i class="fas fa-phone-alt text-3xl text-green-500 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2 text-green-500">Teléfono</h3>
+            <p class="text-lg text-gray-500">+123 456 7890</p>
+          </div> -->
+
+            <!-- Correo -->
+            <div class="contact-info bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow text-center "
+              data-aos="fade-left" data-aos-duration="1500">
+              <i class="fas fa-envelope text-3xl text-green-500 mb-4"></i>
+              <h3 class="text-xl font-semibold mb-2 text-green-500">Correo Electrónico</h3>
+              <p class="text-lg text-gray-500">contacto@diroca.co</p>
+            </div>
+          </div>
+
+          <!-- Dirección -->
+          <div class="contact-info bg-white p-6 shadow-md rounded-lg hover:shadow-xl transition-shadow text-center mb-8"
+            data-aos="fade-up" data-aos-duration="1600">
+            <i class="fas fa-map-marker-alt text-3xl text-green-500 mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2 text-green-500">Dirección</h3>
+            <p class="text-lg text-gray-500">Calle 13 No. 11-50, Local 301, Neiva, Huila</p>
+          </div>
+        </div>
+
+        <!-- Mapa de Google Maps (derecha) -->
+        <div data-aos="fade-left" data-aos-duration="1600">
+          <div class="mb-8">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d635.7794589449569!2d-75.2838301!3d2.9324805!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3b7465f00594c7%3A0x7ca058ef415fda35!2sCl.%2013%20%2311-50%2C%20Neiva%2C%20Huila!5e1!3m2!1ses!2sco!4v1740536299987!5m2!1ses!2sco"
+              width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón de contacto -->
+      <div class="text-center mt-6" data-aos="fade-up" data-aos-duration="1800">
+        <button class="bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600">Contáctanos</button>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+
+      <!-- Logo -->
+      <div class="text-center md:text-left m-5">
+        <img src="images/logo-diroca.png" alt="Logo de la Empresa" class="w-40 mx-auto md:mx-0">
+      </div>
+
+      <!-- Información de Contacto -->
+      <div class="text-center md:text-left hover:text-green-500">
+        <h3 class="text-xl font-semibold mb-2">Contacto</h3>
+        <!-- <p class="text-lg">Teléfono: +123 456 7890</p> -->
+        <p class="text-lg">Correo: contacto@diroca.co</p>
+        <p class="text-lg">Dirección: Calle 13 No. 11-50, Local 301, Neiva, Huila</p>
+      </div>
+
+      <!-- Redes Sociales -->
+      <div class="flex justify-center md:justify-start space-x-6 m-5">
+        <a href="#"  class="text-2xl hover:text-green-500">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#"  class="text-2xl hover:text-green-500">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#"  class="text-2xl hover:text-green-500">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#"  class="text-2xl hover:text-green-500">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Derechos Reservados -->
+    <div class="mt-6 text-center">
+      <p class="text-sm hover:text-green-500">© 2025 DIROCA S.A.S. - Todos los derechos reservados - Desarollado por
+        nachoScript.</p>
+    </div>
+  </footer>
+
+
+  <!-- Script de AOS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // Inicializar AOS para las animaciones
+    AOS.init();
+
+    // Función para alternar el menú hamburguesa y el ícono
+    function toggleMenu() {
+      const menu = document.getElementById('menu-mobile');
+      const icon = document.getElementById('hamburger-icon');
+      menu.classList.toggle('open');
+      if (menu.classList.contains('open')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    }
+
+    // Cerrar el menú después de hacer clic en una opción
+    function closeMenu() {
+      const menu = document.getElementById('menu-mobile');
+      const icon = document.getElementById('hamburger-icon');
+      menu.classList.remove('open');
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    }
+  </script>
+
+</body>
+
+</html>
